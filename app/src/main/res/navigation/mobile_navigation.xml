@@ -10,15 +10,26 @@
         android:label="@string/title_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_navigation_login_to_navigation_contacts"
-            app:destination="@id/navigation_contacts" />
+            android:id="@+id/action_login_to_contacts"
+            app:destination="@id/navigation_contacts">
+            <argument
+                android:name="userId"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_contacts"
         android:name="com.learning.messenger.ui.home.ContactsFragment"
         android:label="@string/title_contacts"
-        tools:layout="@layout/fragment_contacts" />
+        tools:layout="@layout/fragment_contacts">
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_navigation_contacts_to_navigation_login"
+            app:destination="@id/navigation_login" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"

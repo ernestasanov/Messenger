@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.learning.messenger.data.Message
 import com.learning.messenger.data.Person
 import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 
 class DummyAPI : IMessengerAPI {
     override fun login(username: String, password: String): Observable<Int> {
@@ -12,7 +13,7 @@ class DummyAPI : IMessengerAPI {
         } else if (password != "password") {
             return Observable.error(IllegalArgumentException("Wrong password"))
         }
-        return Observable.just(1)
+        return Observable.just(1).delay(1, TimeUnit.SECONDS)
     }
 
     override fun changePassword(userId: Int, password: String): Observable<Boolean> {
@@ -22,7 +23,10 @@ class DummyAPI : IMessengerAPI {
     override fun getContacts(userId: Int): Observable<List<Person>> {
         return Observable.just(
             listOf(
-                Person(1, "Ernest", "Ernest", "Asanov", "")
+                Person(1, "Ernest", "Ernest", "Asanov", ""),
+                Person(2, "Jovan", "Jovan", "Velanac", ""),
+                Person(3, "Leo", "Leonardo", "Fanchini", ""),
+                Person(4, "Riva", "Riva", "Fan", "")
             )
         )
     }
