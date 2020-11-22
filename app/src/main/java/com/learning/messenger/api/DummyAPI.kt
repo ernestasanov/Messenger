@@ -4,29 +4,30 @@ import android.graphics.Bitmap
 import com.learning.messenger.data.Message
 import com.learning.messenger.data.Person
 import io.reactivex.Observable
+import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 
 class DummyAPI : IMessengerAPI {
-    override fun login(username: String, password: String): Observable<Int> {
+    override fun login(username: String, password: String): Single<Int> {
         if (username != "Ernest") {
-            return Observable.error(IllegalArgumentException("Wrong username"))
+            return Single.error(IllegalArgumentException("Wrong username"))
         } else if (password != "password") {
-            return Observable.error(IllegalArgumentException("Wrong password"))
+            return Single.error(IllegalArgumentException("Wrong password"))
         }
-        return Observable.just(1).delay(1, TimeUnit.SECONDS)
+        return Single.just(1).delay(1, TimeUnit.SECONDS)
     }
 
-    override fun changePassword(userId: Int, password: String): Observable<Boolean> {
-        return Observable.just(true)
+    override fun changePassword(userId: Int, password: String): Single<Boolean> {
+        return Single.just(true)
     }
 
-    override fun getContacts(userId: Int): Observable<List<Person>> {
-        return Observable.just(
+    override fun getContacts(userId: Int): Single<List<Person>> {
+        return Single.just(
             listOf(
-                Person(1, "Ernest", "Ernest", "Asanov", ""),
-                Person(2, "Jovan", "Jovan", "Velanac", ""),
-                Person(3, "Leo", "Leonardo", "Fanchini", ""),
-                Person(4, "Riva", "Riva", "Fan", "")
+                Person(1, "Ernest", "Asanov", ""),
+                Person(2, "Jovan", "Velanac", ""),
+                Person(3, "Leonardo", "Fanchini", ""),
+                Person(4, "Riva", "Fan", "")
             )
         )
     }
@@ -35,8 +36,8 @@ class DummyAPI : IMessengerAPI {
         userId: Int,
         personId: Int,
         numberOfLastMessages: Int
-    ): Observable<List<Message>> {
-        return Observable.just(
+    ): Single<List<Message>> {
+        return Single.just(
             listOf(
                 Message(
                     1, 1, 2, "Hi!", null, System.currentTimeMillis() -
@@ -55,8 +56,8 @@ class DummyAPI : IMessengerAPI {
         userId: Int,
         recipientId: Int,
         message: String,
-        attachment: Bitmap
-    ): Observable<Boolean> {
-        return Observable.just(true)
+        attachment: Bitmap?
+    ): Single<Boolean> {
+        return Single.just(true)
     }
 }
