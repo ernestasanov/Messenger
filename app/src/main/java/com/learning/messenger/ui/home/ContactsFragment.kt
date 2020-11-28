@@ -48,7 +48,13 @@ class ContactsFragment : Fragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ contacts ->
-                contactsListView.adapter = PersonAdapter(contacts)
+                contactsListView.adapter = PersonAdapter(contacts) { person ->
+                    val action =
+                        ContactsFragmentDirections.actionNavigationContactsToNavigationMessages(
+                            userId, person.id
+                        )
+                    contactsListView.findNavController().navigate(action)
+                }
             }, { error ->
                 Toast.makeText(context, error.message, Toast.LENGTH_LONG).show()
             })

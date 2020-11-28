@@ -4,7 +4,7 @@ data class Message(
     val id: Int,
     val senderId: Int,
     val recipientId: Int,
-    val text: String,
+    val message: String,
     val attachmentUrl: String?,
     val timestamp: Long
 )

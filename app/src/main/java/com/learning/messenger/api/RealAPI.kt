@@ -47,7 +47,7 @@ class RealAPI : IMessengerAPI {
         personId: Int,
         numberOfLastMessages: Int
     ): Single<List<Message>> {
-        TODO("Not yet implemented")
+        return api.getMessages(userId, personId)
     }
 
     override fun sendMessage(
@@ -56,7 +56,9 @@ class RealAPI : IMessengerAPI {
         message: String,
         attachment: Bitmap?
     ): Single<Boolean> {
-        TODO("Not yet implemented")
+        return api.sendMessage(userId, SendMessageRequest(recipientId, message)).map {
+            it.status
+        }
     }
 }
 
@@ -66,7 +68,15 @@ private interface IMessengerService {
 
     @GET("/user/{userId}/contacts")
     fun getContacts(@Path("userId") userId: Int): Single<List<Person>>
+
+    @GET("/user/{userId}/messages/{personId}")
+    fun getMessages(@Path("userId") userId: Int, @Path("personId") personId: Int): Single<List<Message>>
+
+    @POST("/user/{userId}/message")
+    fun sendMessage(@Path("userId") userId: Int, @Body request: SendMessageRequest): Single<SendMessageResponse>
 }
 
 private data class LoginRequest(val user: String, val password: String)
 private data class LoginResponse(val userId: Int)
+private data class SendMessageRequest(val recipientId: Int, val message: String)
+private data class SendMessageResponse(val status: Boolean)

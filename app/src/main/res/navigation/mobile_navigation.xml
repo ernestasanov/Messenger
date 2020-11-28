@@ -29,8 +29,23 @@
         <action
             android:id="@+id/action_navigation_contacts_to_navigation_login"
             app:destination="@id/navigation_login" />
+        <action
+            android:id="@+id/action_navigation_contacts_to_navigation_messages"
+            app:destination="@id/navigation_messages" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_messages"
+        android:name="com.learning.messenger.ui.home.MessagesFragment"
+        android:label="@string/title_messages"
+        tools:layout="@layout/fragment_messages">
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+        <argument
+            android:name="personId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.learning.messenger.ui.dashboard.DashboardFragment"
